@@ -8,17 +8,16 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('follows', function (Blueprint $table) {
-            $table->id(); // フォロー情報
-            $table->unsignedBigInteger('user_id')->constrained(); // フォローされている側
-            $table->unsignedBigInteger('follower_id');
-            $table->foreign('follower_id')->references('id')->on('users');
-            $table->timestamp('created_at')->useCurrent(); // レコード作成日時
-
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreignId('follow_id')->constrained('users');
+            $table->foreign('follow_id')->references('id')->on('users');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('follows');
+        Schema::dropIfExists('posts');
     }
 };
